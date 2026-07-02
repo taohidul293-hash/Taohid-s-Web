@@ -1,4 +1,4 @@
- /* ==========================================================
+  /* ==========================================================
    NEUROTECH SCI-FI DASHBOARD
 ========================================================== */
 
@@ -83,6 +83,7 @@ body{
   }
 
 }
+ 
 
 /* =========================
    GRID EFFECT
@@ -129,7 +130,7 @@ body::before{
   border-radius:20px;
 }
 
-/* =========================
+ /* =========================
    SIDEBAR
 ========================= */
 
@@ -153,17 +154,25 @@ body::before{
 
   z-index:10;
 
+  /* FIX */
+  overflow-y:auto;
+  overflow-x:hidden;
+
 }
 
-.logo{
+/* Optional: Modern Scrollbar */
 
-  font-size:24px;
-  font-weight:bold;
+.sidebar::-webkit-scrollbar{
+  width:6px;
+}
 
-  margin-bottom:25px;
+.sidebar::-webkit-scrollbar-thumb{
+  background:#6fe7ff;
+  border-radius:10px;
+}
 
-  color:#ff6f91;
-
+.sidebar::-webkit-scrollbar-track{
+  background:transparent;
 }
 
 /* =========================
@@ -547,4 +556,283 @@ h1{
     font-size:30px;
   }
 
+}
+
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+========================= */
+
+@media screen and (max-width: 992px){
+
+  body{
+    grid-template-columns:220px 1fr;
+  }
+
+  .main{
+    padding:30px;
+  }
+
+  h1{
+    font-size:36px;
+  }
+
+}
+
+@media screen and (max-width: 768px){
+
+  body{
+    display:block;
+  }
+
+  .sidebar{
+
+    position:relative;
+
+    width:100%;
+
+    height:auto;
+
+    border-right:none;
+
+    border-bottom:1px solid var(--stroke);
+
+    padding:15px;
+
+    overflow:visible;
+
+  }
+
+  .main{
+
+    width:100%;
+
+    padding:20px;
+
+  }
+
+  h1{
+    font-size:30px;
+  }
+
+  .typing{
+
+    white-space:normal;
+
+    border-right:none;
+
+    width:100%;
+
+    animation:none;
+
+  }
+
+  .card{
+
+    padding:18px;
+
+    border-radius:15px;
+
+  }
+
+  .skills li{
+
+    padding:10px;
+
+    font-size:15px;
+
+  }
+
+  .dark-toggle{
+
+    width:42px;
+    height:42px;
+
+    font-size:16px;
+
+    top:12px;
+    right:12px;
+
+  }
+
+}
+
+@media screen and (max-width: 480px){
+
+  .main{
+    padding:15px;
+  }
+
+  h1{
+    font-size:24px;
+    line-height:1.3;
+  }
+
+  .subtitle{
+    font-size:14px;
+  }
+
+  .card{
+
+    padding:15px;
+
+    margin-top:15px;
+
+  }
+
+  .skills li{
+
+    padding:10px;
+
+    margin:8px 0;
+
+  }
+
+  .dark-toggle{
+
+    width:40px;
+    height:40px;
+
+    font-size:15px;
+
+  }
+
+  .cursor-glow{
+    display:none;
+  }
+
+  .tech-light{
+
+    width:180px;
+    height:180px;
+
+  }
+
+}
+
+@media screen and (max-width: 360px){
+
+  h1{
+    font-size:21px;
+  }
+
+  .main{
+    padding:12px;
+  }
+
+  .card{
+    padding:12px;
+  }
+
+}
+
+    /* =========================
+   ENDING MESSAGE
+========================= */
+
+.ending-message{
+    max-width:680px;
+    margin:120px auto 90px;
+    padding:0 24px;
+    text-align:center;
+}
+
+.ending-message::before{
+    content:"";
+
+    display:block;
+
+    width:36px;
+    height:1px;
+
+    margin:0 auto 36px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(90,120,255,.45),
+        transparent
+    );
+}
+
+.ending-message p{
+    margin:0;
+
+    font-size:clamp(1.05rem,1.4vw,1.2rem);
+    line-height:2.15;
+
+    font-weight:400;
+    letter-spacing:-0.01em;
+
+    color:var(--text);
+
+    opacity:.78;
+
+    text-wrap:balance;
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+}
+
+.ending-message:hover p{
+    opacity:.92;
+}
+
+.ending-message strong{
+    font-weight:600;
+
+    color:var(--primary);
+
+    transition:all .35s ease;
+}
+
+.ending-message:hover strong{
+    opacity:.85;
+}
+
+/* =========================
+   DARK MODE FIX
+========================= */
+
+.dark .ending-message p{
+    color:rgba(255,255,255,.82);
+}
+
+.dark .ending-message strong{
+    color:#7fdcff;
+}
+
+.dark .ending-message::before{
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(127,220,255,.6),
+        transparent
+    );
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+
+    .ending-message{
+        margin:90px auto 70px;
+        padding:0 20px;
+    }
+
+    .ending-message p{
+        font-size:1rem;
+        line-height:1.95;
+    }
+
+}
+
+
+.footer{
+    text-align:center;
+    padding:40px 20px;
+    font-size:.9rem;
+    opacity:.55;
 }
