@@ -1,16 +1,9 @@
  /* ==========================================================
    TAOHID'S WEB
    NEUROTECH SCRIPT SYSTEM
-   CLEAN RESPONSIVE MENU
 ========================================================== */
 
-
 document.addEventListener("DOMContentLoaded", () => {
-
-
-    /* ======================================================
-       BASIC ELEMENTS
-    ====================================================== */
 
     const body = document.body;
 
@@ -31,56 +24,41 @@ document.addEventListener("DOMContentLoaded", () => {
        DARK MODE
     ====================================================== */
 
-    function enableDarkMode(){
+    function enableDarkMode() {
 
         body.classList.add("dark");
 
-        if(toggleBtn){
-
+        if (toggleBtn) {
             toggleBtn.innerHTML = "☀️";
-
         }
-
     }
 
 
-    function disableDarkMode(){
+    function disableDarkMode() {
 
         body.classList.remove("dark");
 
-        if(toggleBtn){
-
+        if (toggleBtn) {
             toggleBtn.innerHTML = "🌙";
-
         }
-
     }
 
-
-    /* Load saved theme */
 
     const savedTheme =
         localStorage.getItem("theme");
 
-
-    if(savedTheme === "dark"){
-
+    if (savedTheme === "dark") {
         enableDarkMode();
-
-    }else{
-
+    } else {
         disableDarkMode();
-
     }
 
 
-    /* Toggle theme */
-
-    if(toggleBtn){
+    if (toggleBtn) {
 
         toggleBtn.addEventListener("click", () => {
 
-            if(body.classList.contains("dark")){
+            if (body.classList.contains("dark")) {
 
                 disableDarkMode();
 
@@ -89,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "light"
                 );
 
-            }else{
+            } else {
 
                 enableDarkMode();
 
@@ -97,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "theme",
                     "dark"
                 );
-
             }
 
         });
@@ -105,120 +82,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-/* ==========================================================
-   UNIVERSAL MOBILE MENU - FINAL
-========================================================== */
+    /* ======================================================
+       UNIVERSAL MOBILE MENU
+    ====================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+    if (sidebar) {
 
-    const sidebar = document.querySelector(".sidebar");
-
-    if (!sidebar) return;
-
-    let menuToggle = document.querySelector(".menu-toggle");
-
-    /* Create menu button if page doesn't have one */
-    if (!menuToggle) {
-
-        menuToggle = document.createElement("button");
-
-        menuToggle.className = "menu-toggle";
-        menuToggle.type = "button";
-
-        menuToggle.innerHTML = "☰";
-
-        menuToggle.setAttribute("aria-label", "Open menu");
-
-        document.body.appendChild(menuToggle);
-    }
-
-    /* Remove old close button */
-    const oldClose = sidebar.querySelector(".menu-close");
-
-    if (oldClose) {
-        oldClose.remove();
-    }
-
-    /* Remove any old overlay */
-    const oldOverlay = document.querySelector(".menu-overlay");
-
-    if (oldOverlay) {
-        oldOverlay.remove();
-    }
+        let menuToggle =
+            document.querySelector(".menu-toggle");
 
 
-    /* OPEN / CLOSE */
-    menuToggle.addEventListener("click", (event) => {
+        /* Create menu button on pages
+           that don't already have one */
 
-        event.preventDefault();
-        event.stopPropagation();
-
-        const open = sidebar.classList.toggle("active");
-
-        if (open) {
-
-            menuToggle.innerHTML = "✕";
-            menuToggle.setAttribute(
-                "aria-label",
-                "Close menu"
-            );
-
-            document.body.classList.add("menu-open");
-
-        } else {
-
-            menuToggle.innerHTML = "☰";
-            menuToggle.setAttribute(
-                "aria-label",
-                "Open menu"
-            );
-
-            document.body.classList.remove("menu-open");
-        }
-
-    });
-
-
-    /* Close when clicking a menu link */
-    sidebar.querySelectorAll("a").forEach(link => {
-
-        link.addEventListener("click", () => {
-
-            sidebar.classList.remove("active");
-
-            menuToggle.innerHTML = "☰";
-
-            document.body.classList.remove("menu-open");
-
-        });
-
-    });
-
-
-    /* ESC closes menu */
-    document.addEventListener("keydown", (event) => {
-
-        if (
-            event.key === "Escape" &&
-            sidebar.classList.contains("active")
-        ) {
-
-            sidebar.classList.remove("active");
-
-            menuToggle.innerHTML = "☰";
-
-            document.body.classList.remove("menu-open");
-        }
-
-    });
-
-});
-        /* --------------------------------------------------
-           If page doesn't have one,
-           automatically create it.
-        -------------------------------------------------- */
-
-        if(!menuToggle){
+        if (!menuToggle) {
 
             menuToggle =
                 document.createElement("button");
@@ -226,134 +103,34 @@ document.addEventListener("DOMContentLoaded", () => {
             menuToggle.className =
                 "menu-toggle";
 
-            menuToggle.id =
-                "menuToggle";
-
             menuToggle.type =
                 "button";
 
-            menuToggle.setAttribute(
-                "aria-label",
-                "Open navigation menu"
-            );
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
             menuToggle.innerHTML =
                 "☰";
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open menu"
+            );
 
             document.body.appendChild(
                 menuToggle
             );
-
         }
 
 
-        /* --------------------------------------------------
-           Remove old separate close button
-           because the SAME button will become X.
-        -------------------------------------------------- */
+        /* Remove old separate close button */
 
         const oldClose =
             sidebar.querySelector(".menu-close");
 
-
-        if(oldClose){
-
+        if (oldClose) {
             oldClose.remove();
-
         }
 
 
-        /* --------------------------------------------------
-           Create overlay
-        -------------------------------------------------- */
-
-        let overlay =
-            document.querySelector(".menu-overlay");
-
-
-        if(!overlay){
-
-            overlay =
-                document.createElement("div");
-
-            overlay.className =
-                "menu-overlay";
-
-            document.body.appendChild(
-                overlay
-            );
-
-        }
-
-
-        /* --------------------------------------------------
-           OPEN MENU
-        -------------------------------------------------- */
-
-        function openMenu(){
-
-            sidebar.classList.add("active");
-
-            overlay.classList.add("active");
-
-            menuToggle.innerHTML =
-                "✕";
-
-            menuToggle.setAttribute(
-                "aria-label",
-                "Close navigation menu"
-            );
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "true"
-            );
-
-            document.body.classList.add(
-                "menu-open"
-            );
-
-        }
-
-
-        /* --------------------------------------------------
-           CLOSE MENU
-        -------------------------------------------------- */
-
-        function closeMenu(){
-
-            sidebar.classList.remove("active");
-
-            overlay.classList.remove("active");
-
-            menuToggle.innerHTML =
-                "☰";
-
-            menuToggle.setAttribute(
-                "aria-label",
-                "Open navigation menu"
-            );
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            document.body.classList.remove(
-                "menu-open"
-            );
-
-        }
-
-
-        /* --------------------------------------------------
-           TOGGLE MENU
-        -------------------------------------------------- */
+        /* Menu toggle */
 
         menuToggle.addEventListener(
             "click",
@@ -363,18 +140,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.stopPropagation();
 
-
-                if(
+                const isOpen =
                     sidebar.classList.contains(
                         "active"
-                    )
-                ){
+                    );
 
-                    closeMenu();
 
-                }else{
+                if (isOpen) {
 
-                    openMenu();
+                    sidebar.classList.remove(
+                        "active"
+                    );
+
+                    menuToggle.innerHTML =
+                        "☰";
+
+                    menuToggle.setAttribute(
+                        "aria-label",
+                        "Open menu"
+                    );
+
+                } else {
+
+                    sidebar.classList.add(
+                        "active"
+                    );
+
+                    menuToggle.innerHTML =
+                        "✕";
+
+                    menuToggle.setAttribute(
+                        "aria-label",
+                        "Close menu"
+                    );
 
                 }
 
@@ -382,23 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /* --------------------------------------------------
-           OVERLAY CLICK
-        -------------------------------------------------- */
-
-        overlay.addEventListener(
-            "click",
-            () => {
-
-                closeMenu();
-
-            }
-        );
-
-
-        /* --------------------------------------------------
-           CLOSE WHEN CLICKING A LINK
-        -------------------------------------------------- */
+        /* Close after clicking a link */
 
         sidebar
             .querySelectorAll("a")
@@ -408,7 +190,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     "click",
                     () => {
 
-                        closeMenu();
+                        sidebar.classList.remove(
+                            "active"
+                        );
+
+                        menuToggle.innerHTML =
+                            "☰";
 
                     }
                 );
@@ -416,86 +203,29 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
 
-        /* --------------------------------------------------
-           ESC KEY
-        -------------------------------------------------- */
+        /* Escape closes menu */
 
         document.addEventListener(
             "keydown",
             (event) => {
 
-                if(
+                if (
                     event.key === "Escape" &&
                     sidebar.classList.contains(
                         "active"
                     )
-                ){
+                ) {
 
-                    closeMenu();
+                    sidebar.classList.remove(
+                        "active"
+                    );
 
+                    menuToggle.innerHTML =
+                        "☰";
                 }
 
             }
         );
-
-
-        /* --------------------------------------------------
-           ACTIVE PAGE
-        -------------------------------------------------- */
-
-        const currentPage =
-            window.location.pathname
-                .split("/")
-                .pop()
-                .toLowerCase();
-
-
-        sidebar
-            .querySelectorAll("a")
-            .forEach(link => {
-
-                const href =
-                    link
-                        .getAttribute("href");
-
-
-                if(!href){
-
-                    return;
-
-                }
-
-
-                const linkPage =
-                    href
-                        .split("/")
-                        .pop()
-                        .split("?")[0]
-                        .split("#")[0]
-                        .toLowerCase();
-
-
-                if(
-                    linkPage &&
-                    linkPage === currentPage
-                ){
-
-                    const parent =
-                        link.closest("li");
-
-
-                    if(parent){
-
-                        parent.classList.add(
-                            "active"
-                        );
-
-                    }
-
-                }
-
-            });
-
 
     }
 
@@ -504,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
        CURSOR GLOW
     ====================================================== */
 
-    if(glow){
+    if (glow) {
 
         document.addEventListener(
             "mousemove",
@@ -526,19 +256,27 @@ document.addEventListener("DOMContentLoaded", () => {
        LOADER
     ====================================================== */
 
-    window.addEventListener(
-        "load",
-        () => {
+    if (loader) {
 
-            if(loader){
+        window.addEventListener(
+            "load",
+            () => {
 
                 loader.style.display =
                     "none";
 
             }
+        );
 
-        }
-    );
+        /* Safety fallback */
 
+        setTimeout(() => {
+
+            loader.style.display =
+                "none";
+
+        }, 2000);
+
+    }
 
 });
