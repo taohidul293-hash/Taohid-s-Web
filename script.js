@@ -105,21 +105,103 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ======================================================
-       MOBILE MENU
-       AUTOMATICALLY WORKS ON ALL SIDEBAR PAGES
-    ====================================================== */
+   /* ==========================================================
+   UNIVERSAL MOBILE MENU
+========================================================== */
 
-    if(sidebar){
+document.addEventListener("DOMContentLoaded", () => {
+
+    const sidebar = document.querySelector(".sidebar");
+
+    if (!sidebar) return;
+
+    let menuToggle = document.querySelector(".menu-toggle");
+
+    /* Create menu button automatically on every page */
+
+    if (!menuToggle) {
+
+        menuToggle = document.createElement("button");
+
+        menuToggle.className = "menu-toggle";
+        menuToggle.id = "menuToggle";
+        menuToggle.type = "button";
+
+        menuToggle.innerHTML = "☰";
+
+        menuToggle.setAttribute(
+            "aria-label",
+            "Open menu"
+        );
+
+        document.body.appendChild(menuToggle);
+    }
+
+    /* Remove old separate close button */
+
+    const oldClose =
+        sidebar.querySelector(".menu-close");
+
+    if (oldClose) {
+        oldClose.remove();
+    }
 
 
-        /* --------------------------------------------------
-           Find existing menu button
-        -------------------------------------------------- */
+    /* OPEN / CLOSE */
 
-        let menuToggle =
-            document.querySelector(".menu-toggle");
+    menuToggle.addEventListener("click", (event) => {
 
+        event.stopPropagation();
+
+        const isOpen =
+            sidebar.classList.contains("active");
+
+        if (isOpen) {
+
+            sidebar.classList.remove("active");
+
+            menuToggle.innerHTML = "☰";
+
+        } else {
+
+            sidebar.classList.add("active");
+
+            menuToggle.innerHTML = "✕";
+        }
+
+    });
+
+
+    /* Close after clicking menu link */
+
+    sidebar.querySelectorAll("a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            sidebar.classList.remove("active");
+
+            menuToggle.innerHTML = "☰";
+
+        });
+
+    });
+
+
+    /* Close with Escape */
+
+    document.addEventListener("keydown", (event) => {
+
+        if (event.key === "Escape") {
+
+            sidebar.classList.remove("active");
+
+            menuToggle.innerHTML = "☰";
+
+        }
+
+    });
+
+});
 
         /* --------------------------------------------------
            If page doesn't have one,
