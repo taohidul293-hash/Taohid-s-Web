@@ -79,3 +79,63 @@ window.addEventListener("load",()=>{
   document.getElementById("loader").style.display = "none";
 
 });
+
+
+/* ==========================================================
+   MOBILE MENU
+========================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menuToggle = document.getElementById("menuToggle");
+    const menuClose = document.getElementById("menuClose");
+    const sidebar = document.getElementById("sidebar");
+
+
+    /* OPEN MENU */
+
+    if (menuToggle && sidebar) {
+
+        menuToggle.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+
+            sidebar.classList.add("active");
+
+        });
+
+    }
+
+
+    /* CLOSE MENU */
+
+    if (menuClose && sidebar) {
+
+        menuClose.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+
+            sidebar.classList.remove("active");
+
+        });
+
+    }
+
+
+    /* CLOSE AFTER CLICKING LINK */
+
+    if (sidebar) {
+
+        sidebar.querySelectorAll("a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                sidebar.classList.remove("active");
+
+            });
+
+        });
+
+    }
+
+});
