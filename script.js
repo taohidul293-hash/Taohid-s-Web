@@ -1,209 +1,212 @@
  /* ==========================================================
    TAOHID'S WEB
-   NEUROTECH SCRIPT SYSTEM
+   FINAL CLEAN SCRIPT
 ========================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+(function () {
+
+    "use strict";
 
     /* ======================================================
-       ELEMENTS
+       LOADER
     ====================================================== */
 
-    const body = document.body;
+    function hideLoader() {
 
-    const toggleBtn =
-        document.querySelector(".dark-toggle");
+        const loader =
+            document.getElementById("loader");
 
-    const sidebar =
-        document.querySelector(".sidebar");
+        if (loader) {
+            loader.style.display = "none";
+        }
 
-    const loader =
-        document.getElementById("loader");
-
-    const glow =
-        document.querySelector(".cursor-glow");
+    }
 
 
     /* ======================================================
        DARK MODE
     ====================================================== */
 
-    function enableDarkMode() {
+    function setupDarkMode() {
 
-        body.classList.add("dark");
+        const body =
+            document.body;
 
-        if (toggleBtn) {
+        const toggleBtn =
+            document.querySelector(".dark-toggle");
+
+        if (!toggleBtn) {
+            return;
+        }
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            body.classList.add("dark");
+
             toggleBtn.innerHTML = "☀️";
-        }
-    }
 
+        } else {
 
-    function disableDarkMode() {
+            body.classList.remove("dark");
 
-        body.classList.remove("dark");
-
-        if (toggleBtn) {
             toggleBtn.innerHTML = "🌙";
+
         }
-    }
 
 
-    const savedTheme =
-        localStorage.getItem("theme");
+        toggleBtn.addEventListener(
+            "click",
+            function () {
+
+                const isDark =
+                    body.classList.toggle("dark");
 
 
-    if (savedTheme === "dark") {
+                if (isDark) {
 
-        enableDarkMode();
+                    localStorage.setItem(
+                        "theme",
+                        "dark"
+                    );
 
-    } else {
+                    toggleBtn.innerHTML = "☀️";
 
-        disableDarkMode();
+                } else {
 
-    }
+                    localStorage.setItem(
+                        "theme",
+                        "light"
+                    );
 
+                    toggleBtn.innerHTML = "🌙";
 
-    if (toggleBtn) {
-
-        toggleBtn.addEventListener("click", () => {
-
-            if (body.classList.contains("dark")) {
-
-                disableDarkMode();
-
-                localStorage.setItem(
-                    "theme",
-                    "light"
-                );
-
-            } else {
-
-                enableDarkMode();
-
-                localStorage.setItem(
-                    "theme",
-                    "dark"
-                );
+                }
 
             }
-
-        });
+        );
 
     }
 
 
     /* ======================================================
-       UNIVERSAL MOBILE MENU
+       MOBILE MENU
     ====================================================== */
 
-    if (sidebar) {
+    function setupMobileMenu() {
 
-        let menuToggle =
+        const sidebar =
+            document.querySelector(".sidebar");
+
+        if (!sidebar) {
+            return;
+        }
+
+
+        let menuButton =
             document.querySelector(".menu-toggle");
 
 
-        /* Create button automatically
-           on pages that don't already have one */
+        /*
+         * Create button automatically
+         * on pages that don't already have one.
+         */
 
-        if (!menuToggle) {
+        if (!menuButton) {
 
-            menuToggle =
+            menuButton =
                 document.createElement("button");
 
-            menuToggle.className =
+            menuButton.className =
                 "menu-toggle";
 
-            menuToggle.id =
-                "menuToggle";
-
-            menuToggle.type =
+            menuButton.type =
                 "button";
 
-            menuToggle.innerHTML =
+            menuButton.innerHTML =
                 "☰";
 
-            menuToggle.setAttribute(
+            menuButton.setAttribute(
                 "aria-label",
                 "Open menu"
             );
 
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
             document.body.appendChild(
-                menuToggle
+                menuButton
             );
 
         }
 
 
-        /* Remove old separate close button */
+        /*
+         * Remove old separate close button.
+         */
 
-        const oldClose =
+        const oldCloseButton =
             sidebar.querySelector(".menu-close");
 
-        if (oldClose) {
+        if (oldCloseButton) {
 
-            oldClose.remove();
-
-        }
-
-
-        /* --------------------------------------------------
-           OPEN / CLOSE MENU
-        -------------------------------------------------- */
-
-        function openMenu() {
-
-            sidebar.classList.add("active");
-
-            menuToggle.innerHTML = "✕";
-
-            menuToggle.setAttribute(
-                "aria-label",
-                "Close menu"
-            );
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "true"
-            );
-
-            body.classList.add("menu-open");
+            oldCloseButton.remove();
 
         }
 
+
+        /*
+         * Close menu function.
+         */
 
         function closeMenu() {
 
             sidebar.classList.remove("active");
 
-            menuToggle.innerHTML = "☰";
+            menuButton.innerHTML = "☰";
 
-            menuToggle.setAttribute(
+            menuButton.setAttribute(
                 "aria-label",
                 "Open menu"
             );
 
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
+            document.body.classList.remove(
+                "menu-open"
             );
-
-            body.classList.remove("menu-open");
 
         }
 
 
-        /* --------------------------------------------------
-           MENU BUTTON
-        -------------------------------------------------- */
+        /*
+         * Open menu function.
+         */
 
-        menuToggle.addEventListener(
+        function openMenu() {
+
+            sidebar.classList.add("active");
+
+            menuButton.innerHTML = "✕";
+
+            menuButton.setAttribute(
+                "aria-label",
+                "Close menu"
+            );
+
+            document.body.classList.add(
+                "menu-open"
+            );
+
+        }
+
+
+        /*
+         * Menu button.
+         */
+
+        menuButton.addEventListener(
             "click",
-            (event) => {
+            function (event) {
 
                 event.preventDefault();
 
@@ -211,7 +214,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 if (
-                    sidebar.classList.contains("active")
+                    sidebar.classList.contains(
+                        "active"
+                    )
                 ) {
 
                     closeMenu();
@@ -226,17 +231,17 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /* --------------------------------------------------
-           CLOSE WHEN MENU LINK IS CLICKED
-        -------------------------------------------------- */
+        /*
+         * Close menu after clicking a link.
+         */
 
         sidebar
             .querySelectorAll("a")
-            .forEach(link => {
+            .forEach(function (link) {
 
                 link.addEventListener(
                     "click",
-                    () => {
+                    function () {
 
                         closeMenu();
 
@@ -246,18 +251,15 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
 
-        /* --------------------------------------------------
-           ESCAPE KEY
-        -------------------------------------------------- */
+        /*
+         * Escape key.
+         */
 
         document.addEventListener(
             "keydown",
-            (event) => {
+            function (event) {
 
-                if (
-                    event.key === "Escape" &&
-                    sidebar.classList.contains("active")
-                ) {
+                if (event.key === "Escape") {
 
                     closeMenu();
 
@@ -266,61 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
-        /* --------------------------------------------------
-           ACTIVE CURRENT PAGE
-        -------------------------------------------------- */
-
-        const currentPage =
-            window.location.pathname
-                .split("/")
-                .pop()
-                .toLowerCase();
-
-
-        sidebar
-            .querySelectorAll("a")
-            .forEach(link => {
-
-                const href =
-                    link.getAttribute("href");
-
-
-                if (!href) {
-                    return;
-                }
-
-
-                const linkPage =
-                    href
-                        .split("/")
-                        .pop()
-                        .split("?")[0]
-                        .split("#")[0]
-                        .toLowerCase();
-
-
-                if (
-                    linkPage &&
-                    linkPage === currentPage
-                ) {
-
-                    const parent =
-                        link.closest("li");
-
-
-                    if (parent) {
-
-                        parent.classList.add(
-                            "active"
-                        );
-
-                    }
-
-                }
-
-            });
-
     }
 
 
@@ -328,11 +275,19 @@ document.addEventListener("DOMContentLoaded", () => {
        CURSOR GLOW
     ====================================================== */
 
-    if (glow) {
+    function setupCursorGlow() {
+
+        const glow =
+            document.querySelector(".cursor-glow");
+
+        if (!glow) {
+            return;
+        }
+
 
         document.addEventListener(
             "mousemove",
-            (event) => {
+            function (event) {
 
                 glow.style.left =
                     event.clientX + "px";
@@ -347,33 +302,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ======================================================
-       LOADER
+       START EVERYTHING
     ====================================================== */
 
-    function hideLoader() {
+    function initialize() {
 
-        if (loader) {
+        try {
 
-            loader.style.display =
-                "none";
+            setupDarkMode();
+
+            setupMobileMenu();
+
+            setupCursorGlow();
+
+        } catch (error) {
+
+            console.error(
+                "Taohid's Web script error:",
+                error
+            );
 
         }
 
+
+        /*
+         * Always remove loader even if
+         * another feature has a problem.
+         */
+
+        hideLoader();
+
     }
 
+
+    /* ======================================================
+       PAGE LOAD
+    ====================================================== */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initialize
+        );
+
+    } else {
+
+        initialize();
+
+    }
+
+
+    /*
+     * Extra safety:
+     * never allow Loading... to remain forever.
+     */
 
     window.addEventListener(
         "load",
         hideLoader
     );
 
-
-    /* Safety fallback:
-       loader cannot stay forever */
-
     setTimeout(
         hideLoader,
-        2000
+        1500
     );
 
-});
+
+})();
