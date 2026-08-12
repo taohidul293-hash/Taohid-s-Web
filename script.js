@@ -5,6 +5,10 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    /* ======================================================
+       ELEMENTS
+    ====================================================== */
+
     const body = document.body;
 
     const toggleBtn =
@@ -47,10 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedTheme =
         localStorage.getItem("theme");
 
+
     if (savedTheme === "dark") {
+
         enableDarkMode();
+
     } else {
+
         disableDarkMode();
+
     }
 
 
@@ -75,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "theme",
                     "dark"
                 );
+
             }
 
         });
@@ -92,8 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector(".menu-toggle");
 
 
-        /* Create menu button on pages
-           that don't already have one */
+        /* Create button automatically
+           on pages that don't already have one */
 
         if (!menuToggle) {
 
@@ -102,6 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             menuToggle.className =
                 "menu-toggle";
+
+            menuToggle.id =
+                "menuToggle";
 
             menuToggle.type =
                 "button";
@@ -114,9 +127,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Open menu"
             );
 
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
             document.body.appendChild(
                 menuToggle
             );
+
         }
 
 
@@ -126,11 +145,61 @@ document.addEventListener("DOMContentLoaded", () => {
             sidebar.querySelector(".menu-close");
 
         if (oldClose) {
+
             oldClose.remove();
+
         }
 
 
-        /* Menu toggle */
+        /* --------------------------------------------------
+           OPEN / CLOSE MENU
+        -------------------------------------------------- */
+
+        function openMenu() {
+
+            sidebar.classList.add("active");
+
+            menuToggle.innerHTML = "✕";
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Close menu"
+            );
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+            body.classList.add("menu-open");
+
+        }
+
+
+        function closeMenu() {
+
+            sidebar.classList.remove("active");
+
+            menuToggle.innerHTML = "☰";
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open menu"
+            );
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            body.classList.remove("menu-open");
+
+        }
+
+
+        /* --------------------------------------------------
+           MENU BUTTON
+        -------------------------------------------------- */
 
         menuToggle.addEventListener(
             "click",
@@ -140,39 +209,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.stopPropagation();
 
-                const isOpen =
-                    sidebar.classList.contains(
-                        "active"
-                    );
 
+                if (
+                    sidebar.classList.contains("active")
+                ) {
 
-                if (isOpen) {
-
-                    sidebar.classList.remove(
-                        "active"
-                    );
-
-                    menuToggle.innerHTML =
-                        "☰";
-
-                    menuToggle.setAttribute(
-                        "aria-label",
-                        "Open menu"
-                    );
+                    closeMenu();
 
                 } else {
 
-                    sidebar.classList.add(
-                        "active"
-                    );
-
-                    menuToggle.innerHTML =
-                        "✕";
-
-                    menuToggle.setAttribute(
-                        "aria-label",
-                        "Close menu"
-                    );
+                    openMenu();
 
                 }
 
@@ -180,7 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /* Close after clicking a link */
+        /* --------------------------------------------------
+           CLOSE WHEN MENU LINK IS CLICKED
+        -------------------------------------------------- */
 
         sidebar
             .querySelectorAll("a")
@@ -190,12 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "click",
                     () => {
 
-                        sidebar.classList.remove(
-                            "active"
-                        );
-
-                        menuToggle.innerHTML =
-                            "☰";
+                        closeMenu();
 
                     }
                 );
@@ -203,7 +246,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
 
-        /* Escape closes menu */
+        /* --------------------------------------------------
+           ESCAPE KEY
+        -------------------------------------------------- */
 
         document.addEventListener(
             "keydown",
@@ -211,21 +256,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (
                     event.key === "Escape" &&
-                    sidebar.classList.contains(
-                        "active"
-                    )
+                    sidebar.classList.contains("active")
                 ) {
 
-                    sidebar.classList.remove(
-                        "active"
-                    );
+                    closeMenu();
 
-                    menuToggle.innerHTML =
-                        "☰";
                 }
 
             }
         );
+
+
+        /* --------------------------------------------------
+           ACTIVE CURRENT PAGE
+        -------------------------------------------------- */
+
+        const currentPage =
+            window.location.pathname
+                .split("/")
+                .pop()
+                .toLowerCase();
+
+
+        sidebar
+            .querySelectorAll("a")
+            .forEach(link => {
+
+                const href =
+                    link.getAttribute("href");
+
+
+                if (!href) {
+                    return;
+                }
+
+
+                const linkPage =
+                    href
+                        .split("/")
+                        .pop()
+                        .split("?")[0]
+                        .split("#")[0]
+                        .toLowerCase();
+
+
+                if (
+                    linkPage &&
+                    linkPage === currentPage
+                ) {
+
+                    const parent =
+                        link.closest("li");
+
+
+                    if (parent) {
+
+                        parent.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                }
+
+            });
 
     }
 
@@ -256,27 +350,30 @@ document.addEventListener("DOMContentLoaded", () => {
        LOADER
     ====================================================== */
 
-    if (loader) {
+    function hideLoader() {
 
-        window.addEventListener(
-            "load",
-            () => {
-
-                loader.style.display =
-                    "none";
-
-            }
-        );
-
-        /* Safety fallback */
-
-        setTimeout(() => {
+        if (loader) {
 
             loader.style.display =
                 "none";
 
-        }, 2000);
+        }
 
     }
+
+
+    window.addEventListener(
+        "load",
+        hideLoader
+    );
+
+
+    /* Safety fallback:
+       loader cannot stay forever */
+
+    setTimeout(
+        hideLoader,
+        2000
+    );
 
 });
