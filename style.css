@@ -1,767 +1,1226 @@
-  /* ==========================================================
-   NEUROTECH SCI-FI DASHBOARD
+ /* ==========================================================
+   TAOHID'S WEB
+   NEUROTECH SCI-FI SYSTEM
+   CLEAN RESPONSIVE VERSION
 ========================================================== */
 
-/* =========================
+
+/* ==========================================================
    ROOT
-========================= */
+========================================================== */
 
 :root{
 
-  --bg1:#d6ecff;
-  --bg2:#e2f7ff;
-  --bg3:#f0e6ff;
+    --bg1:#d6ecff;
+    --bg2:#e2f7ff;
+    --bg3:#f0e6ff;
 
-  --primary:#5a78ff;
-  --accent:#6fe7ff;
+    --primary:#5a78ff;
+    --accent:#6fe7ff;
 
-  --text:#2b3145;
+    --text:#2b3145;
 
-  --glass:rgba(255,255,255,0.15);
-  --glass2:rgba(255,255,255,0.22);
+    --glass:rgba(255,255,255,0.15);
+    --glass2:rgba(255,255,255,0.22);
 
-  --stroke:rgba(120,200,255,0.18);
+    --stroke:rgba(120,200,255,0.18);
 
 }
 
-/* =========================
+
+/* ==========================================================
    RESET
-========================= */
+========================================================== */
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
 }
 
-/* =========================
+
+/* ==========================================================
+   HTML
+========================================================== */
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+/* ==========================================================
    BODY
-========================= */
+========================================================== */
 
 body{
 
-  font-family:"Segoe UI",sans-serif;
+    font-family:"Segoe UI",sans-serif;
 
-  min-height:100vh;
+    min-height:100vh;
 
-  display:grid;
-  grid-template-columns:260px 1fr;
+    display:grid;
 
-  background:linear-gradient(
-    135deg,
-    var(--bg1),
-    var(--bg2),
-    var(--bg3)
-  );
+    grid-template-columns:260px minmax(0,1fr);
 
-  background-size:400% 400%;
+    background:
+        linear-gradient(
+            135deg,
+            var(--bg1),
+            var(--bg2),
+            var(--bg3)
+        );
 
-  animation:aurora 15s ease infinite;
+    background-size:400% 400%;
 
-  color:var(--text);
+    animation:aurora 15s ease infinite;
 
-  overflow-x:hidden;
+    color:var(--text);
+
+    overflow-x:hidden;
 
 }
 
-/* =========================
+
+/* ==========================================================
    BACKGROUND ANIMATION
-========================= */
+========================================================== */
 
 @keyframes aurora{
 
-  0%{
-    background-position:0% 50%;
-  }
+    0%{
+        background-position:0% 50%;
+    }
 
-  50%{
-    background-position:100% 50%;
-  }
+    50%{
+        background-position:100% 50%;
+    }
 
-  100%{
-    background-position:0% 50%;
-  }
+    100%{
+        background-position:0% 50%;
+    }
 
 }
- 
 
-/* =========================
-   GRID EFFECT
-========================= */
+
+/* ==========================================================
+   GRID BACKGROUND
+========================================================== */
 
 body::before{
 
-  content:"";
+    content:"";
 
-  position:fixed;
-  inset:0;
+    position:fixed;
 
-  background:
-    linear-gradient(var(--stroke) 1px, transparent 1px),
-    linear-gradient(90deg,var(--stroke) 1px, transparent 1px);
+    inset:0;
 
-  background-size:60px 60px;
+    background:
+        linear-gradient(
+            var(--stroke) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            var(--stroke) 1px,
+            transparent 1px
+        );
 
-  opacity:0.3;
+    background-size:60px 60px;
 
-  pointer-events:none;
+    opacity:.3;
+
+    pointer-events:none;
+
+    z-index:0;
 
 }
 
-/* =========================
-   CUSTOM SCROLLBAR
-========================= */
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
 
 ::-webkit-scrollbar{
-  width:10px;
+
+    width:10px;
+
 }
 
 ::-webkit-scrollbar-track{
-  background:#0a0f1f;
+
+    background:#0a0f1f;
+
 }
 
 ::-webkit-scrollbar-thumb{
 
-  background:linear-gradient(
-    #5a78ff,
-    #6fe7ff
-  );
+    background:
+        linear-gradient(
+            #5a78ff,
+            #6fe7ff
+        );
 
-  border-radius:20px;
+    border-radius:20px;
+
 }
 
- /* =========================
+
+/* ==========================================================
    SIDEBAR
-========================= */
+========================================================== */
 
 .sidebar{
 
-  height:100vh;
+    height:100vh;
 
-  position:sticky;
-  top:0;
+    position:sticky;
 
-  padding:20px;
+    top:0;
 
-  background:var(--glass);
+    padding:20px;
 
-  backdrop-filter:blur(22px);
+    background:var(--glass);
 
-  border-right:1px solid var(--stroke);
+    backdrop-filter:blur(22px);
 
-  box-shadow:
-    0 0 30px rgba(111,231,255,0.08);
+    -webkit-backdrop-filter:blur(22px);
 
-  z-index:10;
+    border-right:1px solid var(--stroke);
 
-  /* FIX */
-  overflow-y:auto;
-  overflow-x:hidden;
+    box-shadow:
+        0 0 30px rgba(111,231,255,.08);
+
+    z-index:100;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+    min-width:0;
 
 }
 
-/* Optional: Modern Scrollbar */
+
+/* Sidebar scrollbar */
 
 .sidebar::-webkit-scrollbar{
-  width:6px;
+
+    width:6px;
+
 }
 
 .sidebar::-webkit-scrollbar-thumb{
-  background:#6fe7ff;
-  border-radius:10px;
+
+    background:#6fe7ff;
+
+    border-radius:10px;
+
 }
 
 .sidebar::-webkit-scrollbar-track{
-  background:transparent;
+
+    background:transparent;
+
 }
 
-/* =========================
-   SKILLS
-========================= */
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.logo{
+
+    margin-bottom:20px;
+
+}
+
+.logo h2{
+
+    font-size:24px;
+
+    color:var(--text);
+
+}
+
+
+/* ==========================================================
+   SKILLS / MENU
+========================================================== */
 
 .skills{
-  list-style:none;
+
+    list-style:none;
+
 }
 
 .skills li{
 
-  margin:10px 0;
+    margin:10px 0;
 
-  padding:12px;
+    padding:12px;
 
-  border-radius:12px;
+    border-radius:12px;
 
-  background:rgba(255,255,255,0.25);
+    background:rgba(255,255,255,.25);
 
-  transition:0.3s;
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
 
 }
 
 .skills li:hover{
 
-  transform:translateX(5px);
+    transform:translateX(5px);
 
-  background:rgba(255,255,255,0.4);
+    background:rgba(255,255,255,.4);
 
 }
 
-/* ACTIVE GLOW */
-
 .skills li.active{
 
-  background:linear-gradient(
-    135deg,
-    #5a78ff,
-    #6fe7ff
-  );
+    background:
+        linear-gradient(
+            135deg,
+            #5a78ff,
+            #6fe7ff
+        );
 
-  box-shadow:
-    0 0 20px rgba(111,231,255,0.4);
+    box-shadow:
+        0 0 20px rgba(111,231,255,.4);
 
 }
 
 .skills li.active a{
-  color:white;
+
+    color:white;
+
 }
 
 .skills a{
 
-  text-decoration:none;
+    display:block;
 
-  color:#2f3a55;
+    text-decoration:none;
 
-  font-weight:600;
+    color:#2f3a55;
+
+    font-weight:600;
 
 }
 
-/* =========================
-   MAIN
-========================= */
+
+/* ==========================================================
+   MAIN CONTENT
+========================================================== */
 
 .main{
-  padding:40px;
+
+    min-width:0;
+
+    padding:40px;
+
+    position:relative;
+
+    z-index:1;
+
 }
+
+
+/* Other content pages */
+
+.container{
+
+    min-width:0;
+
+    padding:40px;
+
+    position:relative;
+
+    z-index:1;
+
+}
+
+
+/* ==========================================================
+   HEADINGS
+========================================================== */
 
 h1{
 
-  font-size:42px;
+    font-size:42px;
 
-  margin-bottom:15px;
+    margin-bottom:15px;
 
-  color:var(--primary);
+    color:var(--primary);
 
 }
+
+h2{
+
+    line-height:1.35;
+
+}
+
+p{
+
+    line-height:1.7;
+
+}
+
+
+/* ==========================================================
+   SUBTITLE
+========================================================== */
 
 .subtitle{
-  margin-bottom:25px;
+
+    margin-bottom:25px;
+
 }
 
-/* =========================
+
+/* ==========================================================
    TYPING EFFECT
-========================= */
+========================================================== */
 
 .typing{
 
-  width:fit-content;
+    width:fit-content;
 
-  overflow:hidden;
+    max-width:100%;
 
-  white-space:nowrap;
+    overflow:hidden;
 
-  border-right:3px solid #6fe7ff;
+    white-space:nowrap;
 
-  animation:
-    typing 4s steps(30),
-    blink .7s infinite;
+    border-right:3px solid #6fe7ff;
+
+    animation:
+        typing 4s steps(30),
+        blink .7s infinite;
 
 }
 
 @keyframes typing{
 
-  from{
-    width:0;
-  }
+    from{
+        width:0;
+    }
 
-  to{
-    width:100%;
-  }
+    to{
+        width:100%;
+    }
 
 }
 
 @keyframes blink{
 
-  50%{
-    border-color:transparent;
-  }
+    50%{
+        border-color:transparent;
+    }
 
 }
 
-/* =========================
+
+/* ==========================================================
    CARDS
-========================= */
+========================================================== */
 
 .card{
 
-  margin-top:20px;
+    margin-top:20px;
 
-  padding:25px;
+    padding:25px;
 
-  border-radius:18px;
+    border-radius:18px;
 
-  background:var(--glass2);
+    background:var(--glass2);
 
-  backdrop-filter:blur(12px);
+    backdrop-filter:blur(12px);
 
-  border:1px solid rgba(255,255,255,0.2);
+    -webkit-backdrop-filter:blur(12px);
 
-  position:relative;
+    border:1px solid rgba(255,255,255,.2);
 
-  overflow:hidden;
+    position:relative;
 
-  transition:0.35s;
+    overflow:hidden;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
 
 }
 
-/* GRADIENT BORDER */
-
 .card::after{
 
-  content:"";
+    content:"";
 
-  position:absolute;
+    position:absolute;
 
-  inset:0;
+    inset:0;
 
-  padding:1px;
+    padding:1px;
 
-  border-radius:18px;
+    border-radius:18px;
 
-  background:linear-gradient(
-    135deg,
-    #5a78ff,
-    #6fe7ff,
-    #ff6f91
-  );
+    background:
+        linear-gradient(
+            135deg,
+            #5a78ff,
+            #6fe7ff,
+            #ff6f91
+        );
 
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
 
-  -webkit-mask-composite:xor;
+    -webkit-mask-composite:xor;
 
-  pointer-events:none;
+    pointer-events:none;
 
 }
 
 .card:hover{
 
-  transform:translateY(-6px);
+    transform:translateY(-6px);
 
-  box-shadow:
-    0 0 25px rgba(111,231,255,0.2);
+    box-shadow:
+        0 0 25px rgba(111,231,255,.2);
 
 }
 
-/* =========================
+
+/* ==========================================================
    DARK MODE BUTTON
-========================= */
+========================================================== */
 
 .dark-toggle{
 
-  position:fixed;
+    position:fixed;
 
-  top:15px;
-  right:15px;
+    top:15px;
 
-  width:45px;
-  height:45px;
+    right:15px;
 
-  border:none;
+    width:45px;
 
-  border-radius:50%;
+    height:45px;
 
-  cursor:pointer;
+    border:none;
 
-  font-size:18px;
+    border-radius:50%;
 
-  z-index:9999;
+    cursor:pointer;
 
-  background:linear-gradient(
-    135deg,
-    var(--primary),
-    var(--accent)
-  );
+    font-size:18px;
 
-  color:white;
+    z-index:10001;
 
-  box-shadow:
-    0 0 15px rgba(90,120,255,0.3);
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--accent)
+        );
 
-  transition:0.3s;
+    color:white;
+
+    box-shadow:
+        0 0 15px rgba(90,120,255,.3);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
 
 }
 
 .dark-toggle:hover{
 
-  transform:scale(1.1) rotate(10deg);
+    transform:scale(1.1) rotate(10deg);
 
 }
 
-/* =========================
+
+/* ==========================================================
    DARK MODE
-========================= */
+========================================================== */
 
 .dark{
 
-  background:#05070d !important;
+    background:#05070d !important;
 
-  color:white;
+    color:white;
 
 }
 
 .dark .sidebar{
-  background:rgba(10,15,25,0.92);
+
+    background:rgba(10,15,25,.92);
+
+}
+
+.dark .main,
+.dark .container{
+
+    color:white;
+
 }
 
 .dark .card{
-  background:rgba(20,25,40,0.88);
+
+    background:rgba(20,25,40,.88);
+
 }
 
 .dark .skills li{
-  background:rgba(255,255,255,0.08);
+
+    background:rgba(255,255,255,.08);
+
 }
 
 .dark .skills a{
-  color:white;
+
+    color:white;
+
+}
+
+.dark .logo h2{
+
+    color:white;
+
 }
 
 .dark h1{
-  color:#7fdcff;
+
+    color:#7fdcff;
+
 }
 
-/* =========================
+
+/* ==========================================================
    TECH LIGHTS
-========================= */
+========================================================== */
 
 .tech-light{
 
-  position:fixed;
+    position:fixed;
 
-  width:300px;
-  height:300px;
+    width:300px;
 
-  border-radius:50%;
+    height:300px;
 
-  background:radial-gradient(
-    circle,
-    rgba(111,231,255,0.2),
-    transparent 70%
-  );
+    border-radius:50%;
 
-  filter:blur(40px);
+    background:
+        radial-gradient(
+            circle,
+            rgba(111,231,255,.2),
+            transparent 70%
+        );
 
-  pointer-events:none;
+    filter:blur(40px);
 
-  z-index:-1;
+    pointer-events:none;
 
-}
-
-.tech-light:nth-child(4){
-
-  top:-100px;
-  left:-100px;
+    z-index:-1;
 
 }
 
-.tech-light:nth-child(5){
 
-  bottom:-100px;
-  right:-100px;
-
-}
-
-/* =========================
+/* ==========================================================
    CURSOR GLOW
-========================= */
+========================================================== */
 
 .cursor-glow{
 
-  position:fixed;
+    position:fixed;
 
-  width:200px;
-  height:200px;
+    width:200px;
 
-  border-radius:50%;
+    height:200px;
 
-  background:radial-gradient(
-    circle,
-    rgba(111,231,255,0.18),
-    transparent 70%
-  );
+    border-radius:50%;
 
-  transform:translate(-50%,-50%);
+    background:
+        radial-gradient(
+            circle,
+            rgba(111,231,255,.18),
+            transparent 70%
+        );
 
-  pointer-events:none;
+    transform:translate(-50%,-50%);
 
-  z-index:999;
+    pointer-events:none;
+
+    z-index:999;
 
 }
 
-/* =========================
+
+/* ==========================================================
    LOADER
-========================= */
+========================================================== */
 
 #loader{
 
-  position:fixed;
-  inset:0;
+    position:fixed;
 
-  background:#05070d;
+    inset:0;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    background:#05070d;
 
-  z-index:10000;
+    display:flex;
 
-  color:#6fe7ff;
+    align-items:center;
 
-  font-size:32px;
+    justify-content:center;
 
-}
+    z-index:20000;
 
-/* =========================
-   RESPONSIVE
-========================= */
+    color:#6fe7ff;
 
-@media(max-width:700px){
-
-  body{
-    grid-template-columns:1fr;
-  }
-
-  .sidebar{
-
-    height:auto;
-
-    position:relative;
-
-  }
-
-  .main{
-    padding:20px;
-  }
-
-  h1{
-    font-size:30px;
-  }
+    font-size:32px;
 
 }
 
-/* =========================
-   MOBILE RESPONSIVE DESIGN
-========================= */
 
-@media screen and (max-width: 992px){
+/* ==========================================================
+   MOBILE MENU BUTTON
+   SAME BUTTON BECOMES X WHEN OPEN
+========================================================== */
 
-  body{
-    grid-template-columns:220px 1fr;
-  }
+.menu-toggle{
 
-  .main{
-    padding:30px;
-  }
-
-  h1{
-    font-size:36px;
-  }
-
-}
-
-@media screen and (max-width: 768px){
-
-  body{
-    display:block;
-  }
-
-  .sidebar{
-
-    position:relative;
-
-    width:100%;
-
-    height:auto;
-
-    border-right:none;
-
-    border-bottom:1px solid var(--stroke);
-
-    padding:15px;
-
-    overflow:visible;
-
-  }
-
-  .main{
-
-    width:100%;
-
-    padding:20px;
-
-  }
-
-  h1{
-    font-size:30px;
-  }
-
-  .typing{
-
-    white-space:normal;
-
-    border-right:none;
-
-    width:100%;
-
-    animation:none;
-
-  }
-
-  .card{
-
-    padding:18px;
-
-    border-radius:15px;
-
-  }
-
-  .skills li{
-
-    padding:10px;
-
-    font-size:15px;
-
-  }
-
-  .dark-toggle{
-
-    width:42px;
-    height:42px;
-
-    font-size:16px;
-
-    top:12px;
-    right:12px;
-
-  }
-
-}
-
-@media screen and (max-width: 480px){
-
-  .main{
-    padding:15px;
-  }
-
-  h1{
-    font-size:24px;
-    line-height:1.3;
-  }
-
-  .subtitle{
-    font-size:14px;
-  }
-
-  .card{
-
-    padding:15px;
-
-    margin-top:15px;
-
-  }
-
-  .skills li{
-
-    padding:10px;
-
-    margin:8px 0;
-
-  }
-
-  .dark-toggle{
-
-    width:40px;
-    height:40px;
-
-    font-size:15px;
-
-  }
-
-  .cursor-glow{
     display:none;
-  }
 
-  .tech-light{
+    position:fixed;
 
-    width:180px;
-    height:180px;
+    top:16px;
 
-  }
+    left:16px;
+
+    width:46px;
+
+    height:46px;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:1px solid var(--stroke);
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.78);
+
+    backdrop-filter:blur(14px);
+
+    -webkit-backdrop-filter:blur(14px);
+
+    color:#2f3a55;
+
+    font-size:23px;
+
+    line-height:1;
+
+    cursor:pointer;
+
+    z-index:20002;
+
+    box-shadow:
+        0 6px 24px rgba(40,70,120,.18);
+
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
 
 }
 
-@media screen and (max-width: 360px){
+.menu-toggle:hover{
 
-  h1{
-    font-size:21px;
-  }
+    transform:scale(1.06);
 
-  .main{
-    padding:12px;
-  }
-
-  .card{
-    padding:12px;
-  }
+    box-shadow:
+        0 8px 28px rgba(90,120,255,.28);
 
 }
 
-    /* =========================
+
+/* Dark mode menu */
+
+.dark .menu-toggle{
+
+    background:
+        rgba(15,20,35,.92);
+
+    color:white;
+
+}
+
+
+/* Old separate close button is no longer needed */
+
+.menu-close{
+
+    display:none !important;
+
+}
+
+
+/* ==========================================================
+   MENU OVERLAY
+========================================================== */
+
+.menu-overlay{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.25);
+
+    backdrop-filter:blur(2px);
+
+    -webkit-backdrop-filter:blur(2px);
+
+    z-index:19998;
+
+}
+
+.menu-overlay.active{
+
+    display:block;
+
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media screen and (max-width:992px){
+
+    body{
+
+        grid-template-columns:220px minmax(0,1fr);
+
+    }
+
+    .main,
+    .container{
+
+        padding:30px;
+
+    }
+
+    h1{
+
+        font-size:36px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media screen and (max-width:768px){
+
+    body{
+
+        display:block;
+
+        min-height:100vh;
+
+    }
+
+
+    /* MENU BUTTON */
+
+    .menu-toggle{
+
+        display:flex;
+
+    }
+
+
+    /* SIDEBAR */
+
+    .sidebar{
+
+        position:fixed !important;
+
+        top:0 !important;
+
+        left:0 !important;
+
+        width:285px !important;
+
+        max-width:86vw;
+
+        height:100vh !important;
+
+        padding:22px 18px;
+
+        transform:translateX(-110%);
+
+        transition:
+            transform .38s cubic-bezier(.4,0,.2,1);
+
+        border-right:1px solid var(--stroke);
+
+        border-bottom:none;
+
+        box-shadow:
+            12px 0 40px rgba(0,0,0,.18);
+
+        z-index:20000;
+
+        overflow-y:auto !important;
+
+    }
+
+
+    /* OPEN SIDEBAR */
+
+    .sidebar.active{
+
+        transform:translateX(0) !important;
+
+    }
+
+
+    /* CONTENT */
+
+    .main,
+    .container{
+
+        width:100%;
+
+        min-width:0;
+
+        padding:
+            88px
+            20px
+            25px
+            20px;
+
+    }
+
+
+    /* Heading */
+
+    h1{
+
+        font-size:30px;
+
+        line-height:1.3;
+
+    }
+
+
+    /* Typing */
+
+    .typing{
+
+        width:100%;
+
+        max-width:100%;
+
+        white-space:normal;
+
+        overflow:visible;
+
+        border-right:none;
+
+        animation:none;
+
+    }
+
+
+    /* Cards */
+
+    .card{
+
+        padding:18px;
+
+        border-radius:15px;
+
+    }
+
+
+    /* Sidebar links */
+
+    .skills li{
+
+        padding:11px;
+
+        margin:8px 0;
+
+    }
+
+
+    .skills a{
+
+        font-size:15px;
+
+    }
+
+
+    /* Dark button */
+
+    .dark-toggle{
+
+        top:16px;
+
+        right:16px;
+
+        width:46px;
+
+        height:46px;
+
+    }
+
+
+    /* Logo */
+
+    .logo{
+
+        padding-right:55px;
+
+        margin-bottom:20px;
+
+    }
+
+
+    .logo h2{
+
+        font-size:22px;
+
+    }
+
+
+    /* Overlay */
+
+    .sidebar.active + .main{
+
+        pointer-events:none;
+
+    }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media screen and (max-width:480px){
+
+    .menu-toggle{
+
+        top:13px;
+
+        left:13px;
+
+        width:43px;
+
+        height:43px;
+
+        font-size:21px;
+
+    }
+
+
+    .dark-toggle{
+
+        top:13px;
+
+        right:13px;
+
+        width:43px;
+
+        height:43px;
+
+        font-size:16px;
+
+    }
+
+
+    .main,
+    .container{
+
+        padding:
+            78px
+            15px
+            20px
+            15px;
+
+    }
+
+
+    h1{
+
+        font-size:24px;
+
+        line-height:1.3;
+
+    }
+
+
+    .subtitle{
+
+        font-size:14px;
+
+    }
+
+
+    .card{
+
+        padding:15px;
+
+        margin-top:15px;
+
+    }
+
+
+    .skills li{
+
+        padding:10px;
+
+        margin:8px 0;
+
+    }
+
+
+    .cursor-glow{
+
+        display:none;
+
+    }
+
+
+    .tech-light{
+
+        width:180px;
+
+        height:180px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   VERY SMALL DEVICES
+========================================================== */
+
+@media screen and (max-width:360px){
+
+    .sidebar{
+
+        width:270px !important;
+
+    }
+
+
+    .main,
+    .container{
+
+        padding:
+            75px
+            12px
+            18px
+            12px;
+
+    }
+
+
+    h1{
+
+        font-size:21px;
+
+    }
+
+
+    .card{
+
+        padding:12px;
+
+    }
+
+}
+
+
+/* ==========================================================
    ENDING MESSAGE
-========================= */
+========================================================== */
 
 .ending-message{
+
     max-width:680px;
+
     margin:120px auto 90px;
+
     padding:0 24px;
+
     text-align:center;
+
 }
 
 .ending-message::before{
+
     content:"";
 
     display:block;
 
     width:36px;
+
     height:1px;
 
     margin:0 auto 36px;
 
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(90,120,255,.45),
-        transparent
-    );
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(90,120,255,.45),
+            transparent
+        );
+
 }
 
 .ending-message p{
+
     margin:0;
 
-    font-size:clamp(1.05rem,1.4vw,1.2rem);
+    font-size:
+        clamp(
+            1.05rem,
+            1.4vw,
+            1.2rem
+        );
+
     line-height:2.15;
 
     font-weight:400;
-    letter-spacing:-0.01em;
+
+    letter-spacing:-.01em;
 
     color:var(--text);
 
@@ -769,309 +1228,79 @@ h1{
 
     text-wrap:balance;
 
-    transition:
-        opacity .35s ease,
-        transform .35s ease;
-}
-
-.ending-message:hover p{
-    opacity:.92;
 }
 
 .ending-message strong{
+
     font-weight:600;
 
     color:var(--primary);
 
-    transition:all .35s ease;
 }
 
-.ending-message:hover strong{
-    opacity:.85;
-}
 
-/* =========================
-   DARK MODE FIX
-========================= */
+/* Dark ending message */
 
 .dark .ending-message p{
+
     color:rgba(255,255,255,.82);
+
 }
 
 .dark .ending-message strong{
+
     color:#7fdcff;
+
 }
 
 .dark .ending-message::before{
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(127,220,255,.6),
-        transparent
-    );
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(127,220,255,.6),
+            transparent
+        );
+
 }
 
-/* =========================
-   MOBILE
-========================= */
 
-@media (max-width:768px){
+/* Mobile ending */
+
+@media screen and (max-width:768px){
 
     .ending-message{
+
         margin:90px auto 70px;
+
         padding:0 20px;
+
     }
 
     .ending-message p{
+
         font-size:1rem;
+
         line-height:1.95;
+
     }
 
 }
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
 
 .footer{
+
     text-align:center;
+
     padding:40px 20px;
+
     font-size:.9rem;
+
     opacity:.55;
-}
-
-/* ==========================================================
-   MENU BUTTON - SAFE FIX
-========================================================== */
-
-.menu-toggle {
-    display: none;
-
-    position: fixed;
-    top: 15px;
-    left: 15px;
-
-    width: 44px;
-    height: 44px;
-
-    border: 1px solid var(--stroke);
-    border-radius: 12px;
-
-    background: rgba(255, 255, 255, 0.75);
-    color: #2f3a55;
-
-    font-size: 22px;
-    cursor: pointer;
-
-    z-index: 9999;
-
-    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
-}
-
-
-/* CLOSE BUTTON HIDDEN ON DESKTOP */
-
-.menu-close {
-    display: none;
-}
-
-
-/* ==========================================================
-   MOBILE MENU
-========================================================== */
-
-@media screen and (max-width: 768px) {
-
-    .menu-toggle {
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-    }
-
-    .menu-close {
-        display: flex;
-
-        position: absolute;
-        top: 15px;
-        right: 15px;
-
-        width: 38px;
-        height: 38px;
-
-        align-items: center;
-        justify-content: center;
-
-        border: none;
-        border-radius: 10px;
-
-        background: rgba(255,255,255,0.15);
-
-        color: #2f3a55;
-
-        font-size: 20px;
-        cursor: pointer;
-
-        z-index: 20;
-    }
-
-    .sidebar {
-        position: fixed !important;
-
-        top: 0;
-        left: 0;
-
-        width: 280px !important;
-        height: 100vh !important;
-
-        z-index: 9998;
-
-        transform: translateX(-105%);
-
-        transition: transform 0.35s ease;
-
-        overflow-y: auto !important;
-    }
-
-    .sidebar.active {
-        transform: translateX(0);
-    }
-
-    .main {
-        width: 100%;
-    }
-
-}
-
-
-/* DARK MODE */
-
-.dark .menu-toggle {
-    background: rgba(20,25,40,0.9);
-    color: white;
-}
-
-.dark .menu-close {
-    background: rgba(255,255,255,0.1);
-    color: white;
-}
-
-
-/* ==========================================================
-   FINAL MENU + DESKTOP GRID FIX
-========================================================== */
-
-/* Desktop: menu button completely hidden */
-.menu-toggle {
-    display: none !important;
-}
-
-/* Desktop sidebar must stay in LEFT column */
-.sidebar {
-    grid-column: 1 !important;
-    grid-row: 1 !important;
-}
-
-/* Desktop main content must stay in RIGHT column */
-.main {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-}
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media screen and (max-width: 768px) {
-
-    /* Show menu button */
-    .menu-toggle {
-        display: flex !important;
-
-        position: fixed;
-
-        top: 15px;
-        left: 15px;
-
-        width: 44px;
-        height: 44px;
-
-        align-items: center;
-        justify-content: center;
-
-        border: 1px solid var(--stroke);
-        border-radius: 12px;
-
-        background: rgba(255,255,255,0.8);
-
-        color: #2f3a55;
-
-        font-size: 22px;
-
-        cursor: pointer;
-
-        z-index: 10001;
-    }
-
-
-    /* Mobile sidebar */
-    .sidebar {
-        position: fixed !important;
-
-        top: 0 !important;
-        left: 0 !important;
-
-        width: 280px !important;
-        height: 100vh !important;
-
-        grid-column: auto !important;
-        grid-row: auto !important;
-
-        transform: translateX(-110%);
-
-        transition: transform 0.35s ease;
-
-        z-index: 10000;
-
-        overflow-y: auto !important;
-    }
-
-
-    /* OPEN */
-    .sidebar.active {
-        transform: translateX(0) !important;
-    }
-
-
-    /* Main */
-    .main {
-        grid-column: 1 / -1 !important;
-        grid-row: 1 !important;
-
-        width: 100% !important;
-    }
-
-
-    /* Close button */
-    .menu-close {
-        display: flex !important;
-
-        position: absolute;
-
-        top: 15px;
-        right: 15px;
-
-        width: 38px;
-        height: 38px;
-
-        align-items: center;
-        justify-content: center;
-
-        border: none;
-        border-radius: 10px;
-
-        background: rgba(255,255,255,0.15);
-
-        cursor: pointer;
-
-        z-index: 10002;
-    }
 
 }
