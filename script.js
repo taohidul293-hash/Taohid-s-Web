@@ -1,141 +1,452 @@
  /* ==========================================================
+   TAOHID'S WEB
    NEUROTECH SCRIPT SYSTEM
+   CLEAN RESPONSIVE MENU
 ========================================================== */
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const toggleBtn = document.querySelector(".dark-toggle");
-  const body = document.body;
 
-  // =========================
-  // LOAD SAVED THEME
-  // =========================
+    /* ======================================================
+       BASIC ELEMENTS
+    ====================================================== */
 
-  const savedTheme = localStorage.getItem("theme");
+    const body = document.body;
 
-  if(savedTheme === "dark"){
+    const toggleBtn =
+        document.querySelector(".dark-toggle");
 
-    enableDarkMode();
+    const sidebar =
+        document.querySelector(".sidebar");
 
-  }
+    const loader =
+        document.getElementById("loader");
 
-  // =========================
-  // DARK MODE TOGGLE
-  // =========================
+    const glow =
+        document.querySelector(".cursor-glow");
 
-  toggleBtn.addEventListener("click", () => {
 
-    body.classList.toggle("dark");
+    /* ======================================================
+       DARK MODE
+    ====================================================== */
 
-    if(body.classList.contains("dark")){
+    function enableDarkMode(){
 
-      localStorage.setItem("theme","dark");
+        body.classList.add("dark");
 
-      toggleBtn.innerHTML = "☀️";
+        if(toggleBtn){
+
+            toggleBtn.innerHTML = "☀️";
+
+        }
+
+    }
+
+
+    function disableDarkMode(){
+
+        body.classList.remove("dark");
+
+        if(toggleBtn){
+
+            toggleBtn.innerHTML = "🌙";
+
+        }
+
+    }
+
+
+    /* Load saved theme */
+
+    const savedTheme =
+        localStorage.getItem("theme");
+
+
+    if(savedTheme === "dark"){
+
+        enableDarkMode();
 
     }else{
 
-      localStorage.setItem("theme","light");
-
-      toggleBtn.innerHTML = "🌙";
+        disableDarkMode();
 
     }
 
-  });
 
-  // =========================
-  // FUNCTIONS
-  // =========================
+    /* Toggle theme */
 
-  function enableDarkMode(){
+    if(toggleBtn){
 
-    body.classList.add("dark");
+        toggleBtn.addEventListener("click", () => {
 
-    toggleBtn.innerHTML = "☀️";
+            if(body.classList.contains("dark")){
 
-  }
+                disableDarkMode();
 
-});
+                localStorage.setItem(
+                    "theme",
+                    "light"
+                );
 
-/* =========================
-   CURSOR GLOW
-========================= */
+            }else{
 
-const glow = document.querySelector(".cursor-glow");
+                enableDarkMode();
 
-document.addEventListener("mousemove",(e)=>{
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
 
-  glow.style.left = e.clientX + "px";
-  glow.style.top = e.clientY + "px";
+            }
 
-});
+        });
 
-/* =========================
-   LOADER
-========================= */
-
-window.addEventListener("load",()=>{
-
-  document.getElementById("loader").style.display = "none";
-
-});
+    }
 
 
-/* ==========================================================
-   MOBILE MENU
-========================================================== */
+    /* ======================================================
+       MOBILE MENU
+       AUTOMATICALLY WORKS ON ALL SIDEBAR PAGES
+    ====================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    const menuToggle = document.getElementById("menuToggle");
-    const menuClose = document.getElementById("menuClose");
-    const sidebar = document.getElementById("sidebar");
+    if(sidebar){
 
 
-    /* OPEN MENU */
+        /* --------------------------------------------------
+           Find existing menu button
+        -------------------------------------------------- */
 
-    if (menuToggle && sidebar) {
+        let menuToggle =
+            document.querySelector(".menu-toggle");
 
-        menuToggle.addEventListener("click", (event) => {
 
-            event.stopPropagation();
+        /* --------------------------------------------------
+           If page doesn't have one,
+           automatically create it.
+        -------------------------------------------------- */
+
+        if(!menuToggle){
+
+            menuToggle =
+                document.createElement("button");
+
+            menuToggle.className =
+                "menu-toggle";
+
+            menuToggle.id =
+                "menuToggle";
+
+            menuToggle.type =
+                "button";
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            menuToggle.innerHTML =
+                "☰";
+
+            document.body.appendChild(
+                menuToggle
+            );
+
+        }
+
+
+        /* --------------------------------------------------
+           Remove old separate close button
+           because the SAME button will become X.
+        -------------------------------------------------- */
+
+        const oldClose =
+            sidebar.querySelector(".menu-close");
+
+
+        if(oldClose){
+
+            oldClose.remove();
+
+        }
+
+
+        /* --------------------------------------------------
+           Create overlay
+        -------------------------------------------------- */
+
+        let overlay =
+            document.querySelector(".menu-overlay");
+
+
+        if(!overlay){
+
+            overlay =
+                document.createElement("div");
+
+            overlay.className =
+                "menu-overlay";
+
+            document.body.appendChild(
+                overlay
+            );
+
+        }
+
+
+        /* --------------------------------------------------
+           OPEN MENU
+        -------------------------------------------------- */
+
+        function openMenu(){
 
             sidebar.classList.add("active");
 
-        });
+            overlay.classList.add("active");
 
-    }
+            menuToggle.innerHTML =
+                "✕";
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Close navigation menu"
+            );
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+            document.body.classList.add(
+                "menu-open"
+            );
+
+        }
 
 
-    /* CLOSE MENU */
+        /* --------------------------------------------------
+           CLOSE MENU
+        -------------------------------------------------- */
 
-    if (menuClose && sidebar) {
-
-        menuClose.addEventListener("click", (event) => {
-
-            event.stopPropagation();
+        function closeMenu(){
 
             sidebar.classList.remove("active");
 
-        });
+            overlay.classList.remove("active");
 
-    }
+            menuToggle.innerHTML =
+                "☰";
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            document.body.classList.remove(
+                "menu-open"
+            );
+
+        }
 
 
-    /* CLOSE AFTER CLICKING LINK */
+        /* --------------------------------------------------
+           TOGGLE MENU
+        -------------------------------------------------- */
 
-    if (sidebar) {
+        menuToggle.addEventListener(
+            "click",
+            (event) => {
 
-        sidebar.querySelectorAll("a").forEach(link => {
+                event.preventDefault();
 
-            link.addEventListener("click", () => {
+                event.stopPropagation();
 
-                sidebar.classList.remove("active");
+
+                if(
+                    sidebar.classList.contains(
+                        "active"
+                    )
+                ){
+
+                    closeMenu();
+
+                }else{
+
+                    openMenu();
+
+                }
+
+            }
+        );
+
+
+        /* --------------------------------------------------
+           OVERLAY CLICK
+        -------------------------------------------------- */
+
+        overlay.addEventListener(
+            "click",
+            () => {
+
+                closeMenu();
+
+            }
+        );
+
+
+        /* --------------------------------------------------
+           CLOSE WHEN CLICKING A LINK
+        -------------------------------------------------- */
+
+        sidebar
+            .querySelectorAll("a")
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        closeMenu();
+
+                    }
+                );
 
             });
 
-        });
+
+        /* --------------------------------------------------
+           ESC KEY
+        -------------------------------------------------- */
+
+        document.addEventListener(
+            "keydown",
+            (event) => {
+
+                if(
+                    event.key === "Escape" &&
+                    sidebar.classList.contains(
+                        "active"
+                    )
+                ){
+
+                    closeMenu();
+
+                }
+
+            }
+        );
+
+
+        /* --------------------------------------------------
+           ACTIVE PAGE
+        -------------------------------------------------- */
+
+        const currentPage =
+            window.location.pathname
+                .split("/")
+                .pop()
+                .toLowerCase();
+
+
+        sidebar
+            .querySelectorAll("a")
+            .forEach(link => {
+
+                const href =
+                    link
+                        .getAttribute("href");
+
+
+                if(!href){
+
+                    return;
+
+                }
+
+
+                const linkPage =
+                    href
+                        .split("/")
+                        .pop()
+                        .split("?")[0]
+                        .split("#")[0]
+                        .toLowerCase();
+
+
+                if(
+                    linkPage &&
+                    linkPage === currentPage
+                ){
+
+                    const parent =
+                        link.closest("li");
+
+
+                    if(parent){
+
+                        parent.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                }
+
+            });
+
 
     }
+
+
+    /* ======================================================
+       CURSOR GLOW
+    ====================================================== */
+
+    if(glow){
+
+        document.addEventListener(
+            "mousemove",
+            (event) => {
+
+                glow.style.left =
+                    event.clientX + "px";
+
+                glow.style.top =
+                    event.clientY + "px";
+
+            }
+        );
+
+    }
+
+
+    /* ======================================================
+       LOADER
+    ====================================================== */
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            if(loader){
+
+                loader.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
 
 });
