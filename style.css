@@ -951,3 +951,127 @@ h1{
     background: rgba(255,255,255,0.1);
     color: white;
 }
+
+
+/* ==========================================================
+   FINAL MENU + DESKTOP GRID FIX
+========================================================== */
+
+/* Desktop: menu button completely hidden */
+.menu-toggle {
+    display: none !important;
+}
+
+/* Desktop sidebar must stay in LEFT column */
+.sidebar {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+}
+
+/* Desktop main content must stay in RIGHT column */
+.main {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media screen and (max-width: 768px) {
+
+    /* Show menu button */
+    .menu-toggle {
+        display: flex !important;
+
+        position: fixed;
+
+        top: 15px;
+        left: 15px;
+
+        width: 44px;
+        height: 44px;
+
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--stroke);
+        border-radius: 12px;
+
+        background: rgba(255,255,255,0.8);
+
+        color: #2f3a55;
+
+        font-size: 22px;
+
+        cursor: pointer;
+
+        z-index: 10001;
+    }
+
+
+    /* Mobile sidebar */
+    .sidebar {
+        position: fixed !important;
+
+        top: 0 !important;
+        left: 0 !important;
+
+        width: 280px !important;
+        height: 100vh !important;
+
+        grid-column: auto !important;
+        grid-row: auto !important;
+
+        transform: translateX(-110%);
+
+        transition: transform 0.35s ease;
+
+        z-index: 10000;
+
+        overflow-y: auto !important;
+    }
+
+
+    /* OPEN */
+    .sidebar.active {
+        transform: translateX(0) !important;
+    }
+
+
+    /* Main */
+    .main {
+        grid-column: 1 / -1 !important;
+        grid-row: 1 !important;
+
+        width: 100% !important;
+    }
+
+
+    /* Close button */
+    .menu-close {
+        display: flex !important;
+
+        position: absolute;
+
+        top: 15px;
+        right: 15px;
+
+        width: 38px;
+        height: 38px;
+
+        align-items: center;
+        justify-content: center;
+
+        border: none;
+        border-radius: 10px;
+
+        background: rgba(255,255,255,0.15);
+
+        cursor: pointer;
+
+        z-index: 10002;
+    }
+
+}
